@@ -6,16 +6,17 @@ import cors from "cors"
 import path from "path"
 import { fileURLToPath } from 'url';
 
-dotenv.config();
+dotenv.config({path: "./.env"})
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename)
 
 const app = express();
 app.use(cors());
 const port = 3000;
 
 app.use(express.json());
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename)
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 

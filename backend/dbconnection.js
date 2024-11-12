@@ -1,11 +1,13 @@
 import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv'
+import { fileURLToPath } from 'url';
+import path from "path"
 
 // Load environment variables from .env file
-dotenv.config();
+dotenv.config()
 
 // MongoDB connection URI for local MongoDB instance
-const connectionURL = "mongodb+srv://Syed:b5KM$7dmmS8r@cst3144.wwnij.mongodb.net/";
+const connectionURL = process.env.MONGODB_URI;
 
 // Function to connect to MongoDB locally and return the collection
 export async function connectToMongoDB(databaseName, collectionName) {

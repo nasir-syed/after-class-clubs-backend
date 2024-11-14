@@ -41,8 +41,7 @@ app.post('/orders', async (req, res) => {
             return res.status(400).json({ message: 'Name and phone are required' });
         }
 
-        // Map the order to include only _id and name for each item
-        const minimalOrder = order.map(item => ({
+        const reducedOrder = order.map(item => ({
             _id: new ObjectId(item._id), 
             name: item.name
         }));
@@ -52,7 +51,7 @@ app.post('/orders', async (req, res) => {
             name,
             phone,
             totalPrice,
-            order: minimalOrder, // Use the minimal order array
+            order: reducedOrder,
             date: new Date()
         });
 
@@ -99,8 +98,7 @@ app.put('/products/updateAvailability', async (req, res) => {
             if (currentAvailability < quantityToDeduct) {
                 return res.status(400).json({ message: `Not enough availability for product with _id ${productId}` });
             }
-
-            
+ 
             return productsCollection.updateOne(
                 { _id: new ObjectId(productId) },
                 { $inc: { availability: -quantityToDeduct } } 
@@ -119,16 +117,14 @@ app.put('/products/updateAvailability', async (req, res) => {
 
 app.get('/search', async (req, res) => {
     try {
-        const { query } = req.query; // Get the search query from the request
+        const { query } = req.query;
 
         if (!query) {
             return res.status(400).json({ message: 'Search query is required' });
         }
-
-        // Connect to the 'Products' collection in MongoDB
+ 
         const collection = await connectToMongoDB('afterClassClubs', 'Products');
 
-        // Use a regex to match the query in 'name' or 'location' (case-insensitive)
         const regexQuery = new RegExp(query, 'i');
         const clubs = await collection.find({
             $or: [
@@ -137,7 +133,7 @@ app.get('/search', async (req, res) => {
             ]
         }).toArray();
 
-        res.json(clubs); // Return the matching clubs
+        res.json(clubs);
     } catch (error) {
         console.error('Error searching clubs:', error);
         res.status(500).json({ message: 'Failed to search clubs' });

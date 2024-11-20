@@ -14,8 +14,6 @@ export async function connectToMongoDB(databaseName, collectionName) {
     try {
       // Create a new MongoClient
       const client = new MongoClient(connectionURL);
-
-      console.log("asda")
   
       // Connect to MongoDB
       await client.connect();

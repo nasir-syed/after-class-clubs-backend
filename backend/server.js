@@ -20,6 +20,11 @@ app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
+app.use((request, response, next) => {
+    const curTime = new Date().toISOString();
+    console.log(`${curTime} ${request.method} request: ${request.url}`)
+    next();
+})
 
 app.get('/products', async (req, res) => {
     try {

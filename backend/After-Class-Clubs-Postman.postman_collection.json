@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "ebc11842-e5e3-4a80-8e02-bca4ecc74fcf",
+		"name": "After-Class-Clubs-Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32383315"
+	},
+	"item": [
+		{
+			"name": "getClubs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://after-class-clubs.onrender.com/products",
+					"protocol": "https",
+					"host": [
+						"after-class-clubs",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "makeOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"postmanTest\",\r\n    \"phone\": \"0501234567\",\r\n    \"totalPrice\": 200,\r\n    \"order\": [\r\n        {\r\n            \"_id\": \"673242bd4aa55b0012a0652a\",\r\n            \"name\": \"Tennis\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://after-class-clubs.onrender.com/orders",
+					"protocol": "https",
+					"host": [
+						"after-class-clubs",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateAvailability",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cart\": [\r\n        {\r\n            \"_id\": \"673242bd4aa55b0012a0652a\",\r\n            \"name\": \"Tennis\",\r\n            \"location\": \"Burjuman\",\r\n            \"price\": 200,\r\n            \"availability\": 5,\r\n            \"image\": \"images/tennis.png\",\r\n            \"rating\": 3\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://after-class-clubs.onrender.com/products/updateAvailability",
+					"protocol": "https",
+					"host": [
+						"after-class-clubs",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"products",
+						"updateAvailability"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://after-class-clubs.onrender.com/search?query=al",
+					"protocol": "https",
+					"host": [
+						"after-class-clubs",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "al"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

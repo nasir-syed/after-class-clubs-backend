@@ -134,7 +134,9 @@ app.get('/search', async (req, res) => {
         const clubs = await collection.find({
             $or: [
                 { name: { $regex: regexQuery } },
-                { location: { $regex: regexQuery } }
+                { location: { $regex: regexQuery } },
+                { price: { $regex: regexQuery } },
+                { availability: { $regex: regexQuery } }
             ]
         }).toArray();
 

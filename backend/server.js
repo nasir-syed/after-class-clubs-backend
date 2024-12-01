@@ -127,18 +127,26 @@ app.get('/search', async (req, res) => {
         if (!query) {
             return res.status(400).json({ message: 'Search query is required' });
         }
- 
+
         const collection = await connectToMongoDB('afterClassClubs', 'Products');
 
+        const numQuery = parseFloat(query);
+
         const regexQuery = new RegExp(query, 'i');
-        const clubs = await collection.find({
+
+        const searchCriteria = {
             $or: [
                 { name: { $regex: regexQuery } },
-                { location: { $regex: regexQuery } },
-                { price: { $regex: regexQuery } },
-                { availability: { $regex: regexQuery } }
+                { location: { $regex: regexQuery } }
             ]
-        }).toArray();
+        };
+        
+        if (!isNaN(numQuery)) {
+            searchCriteria.$or.push({ price: numQuery });
+            searchCriteria.$or.push({ availability: numQuery });
+        }
+
+        const clubs = await collection.find(searchCriteria).toArray();
 
         res.json(clubs);
     } catch (error) {

@@ -5,6 +5,7 @@ import { connectToMongoDB } from './dbconnection.js';
 import cors from "cors"
 import path from "path"
 import { fileURLToPath } from 'url';
+import fs from "fs"
 
 // load environment variables from .env file
 dotenv.config({path: "./.env"})

@@ -5,7 +5,6 @@ import { connectToMongoDB } from './dbconnection.js';
 import cors from "cors"
 import path from "path"
 import { fileURLToPath } from 'url';
-import fs from "fs"
 
 // load environment variables from .env file
 dotenv.config({path: "./.env"})
@@ -20,20 +19,10 @@ const port = process.env.PORT || 3000;
 // middleware that will parse incoming JSON requests
 app.use(express.json());
 
-// serve static files from the images folder 
+// serve static files from the "images" folder 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
-
-app.use('/images', (req, res, next) => {
-    const imagePath = path.join(__dirname, 'images', req.path); // complete path
-
-    // check if the file exists
-    if (!fs.existsSync(imagePath)) {
-        return res.status(404).json({ message: 'image not found' });
-    }
-
-    express.static(path.join(__dirname, 'images'))(req, res, next);
-});
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // logger middeware 
 app.use((request, response, next) => {

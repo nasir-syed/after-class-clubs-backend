@@ -5,6 +5,7 @@ import { connectToMongoDB } from './dbconnection.js';
 import cors from "cors"
 import path from "path"
 import { fileURLToPath } from 'url';
+import fs from "fs"
 
 // load environment variables from .env file
 dotenv.config({path: "./.env"})
@@ -22,6 +23,19 @@ app.use(express.json());
 // serve static files from the "images" folder 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
+
+// error handling middleware for images that dont exist 
+app.use('/images', (req, res, next) => {
+    const filePath = path.join(__dirname, 'images', req.url);
+
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            return res.status(404).json({ error: 'Image not found' });
+        }
+        next();
+    });
+});
+
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // logger middeware 
